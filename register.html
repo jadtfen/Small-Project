@@ -21,7 +21,8 @@
         }
         .btn-primary:hover {
             background-color: #fffbe9; 
-            border-color: #fffbe9; 
+            border-color: #fffbe9;
+            color: #562B08;
         }
         .register-header {
             color: #562B08; 
@@ -30,7 +31,7 @@
             color: #562B08; 
         }
         .login-link {
-            color: blue;
+            color: #562B08;
             text-decoration: underline;
         }
     </style>
@@ -60,7 +61,7 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </div>
         <div class="text-center mt-3">
-            <a href="login.html" class="login-link">Have an account? Login</a>
+            <a href="login.html" class="login-link">Have an account? Log In!</a>
         </div>
     </form>
 </div>
@@ -83,7 +84,7 @@
                 success: function(response) {
                     alert(response.message); 
                     $('#registrationForm')[0].reset();
-                    // window.location.href = "login.html"; // redirect to login page
+                    window.location.href = "login.html"; // redirect to login page
                 },
                 error: function(xhr) {
                     alert(xhr.responseJSON.message);
