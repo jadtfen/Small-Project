@@ -29,6 +29,16 @@
         .form-group label {
             color: #562B08; 
         }
+        .contact-box {
+            background-color: #fff;
+            border: 1px solid #562B08;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+        .contact-box .btn {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -40,8 +50,10 @@
             </form>
         </div>
         <br>
+        <div id="contactsContainer"></div>
+        <br>
         <div class="d-flex justify-content-center">
-            <button onclick="doLogout()" class="btn btn-primary"> Logout </button>
+            <button onclick="doLogout()" class="btn btn-primary">Logout</button>
         </div>
         <p id="colorSearchResult"></p>
     </div>
@@ -70,30 +82,26 @@
             let xhr = new XMLHttpRequest();
             xhr.open("POST", url, true);
             xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            // try {
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        let jsonObject = JSON.parse(xhr.responseText);
-                        userId = jsonObject.UserId;
+            xhr.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    let jsonObject = JSON.parse(xhr.responseText);
+                    userId = jsonObject.UserId;
 
-                        if (userId < 1) {
-                            alert("User/Password combination incorrect");
-                            return;
-                        }
-
-                        firstName = jsonObject.firstName;
-                        lastName = jsonObject.lastName;
-
-                        window.location.href = "contactpage.html";
+                    if (userId < 1) {
+                        alert("User/Password combination incorrect");
+                        return;
                     }
-                };
-                xhr.send(jsonPayload);
-            // } catch (err) {
-            //    alert("error: " + err.message);
-            // }
+
+                    firstName = jsonObject.firstName;
+                    lastName = jsonObject.lastName;
+
+                    window.location.href = "contactpage.html";
+                }
+            };
+            xhr.send(jsonPayload);
         }
-        function doLogout()
-        {
+
+        function doLogout() {
             userId = 0;
             firstName = "";
             lastName = "";
@@ -101,41 +109,35 @@
             window.location.href = "index.html";
         }
 
-        function searchColor() {
-            let srch = document.getElementById("searchText").value;
-            document.getElementById("colorSearchResult").innerHTML = "";
-
-            let colorList = "";
-
-            let tmp = { search: srch, userId: userId };
-            let jsonPayload = JSON.stringify(tmp);
-
-            let url = urlBase + '/SearchColors.' + extension;
-
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            // try {
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("colorSearchResult").innerHTML = "Color(s) have been retrieved";
-                        let jsonObject = JSON.parse(xhr.responseText);
-
-                        for (let i = 0; i < jsonObject.results.length; i++) {
-                            colorList += jsonObject.results[i];
-                            if (i < jsonObject.results.length - 1) {
-                                colorList += "<br />\r\n";
-                            }
-                        }
-
-                        document.getElementById("colorSearchResult").innerHTML = colorList;
-                    }
-                };
-                xhr.send(jsonPayload);
-            // } catch (err) {
-            //    document.getElementById("colorSearchResult").innerHTML = err.message;
-            // }
+        function doContacts(contacts) {
+            const container = document.getElementById('contactsContainer');
+            container.innerHTML = '';
+            contacts.forEach(contact => {
+                const contactBox = document.createElement('div');
+                contactBox.className = 'contact-box';
+                contactBox.innerHTML = `
+                    <div class="d-flex justify-content-center">
+                    <p><strong>&nbsp&nbspName:</strong> ${contact.name}</p>
+                    <p><strong>&nbsp&nbspNumber:</strong> ${contact.number}</p>
+                    <p><strong>&nbsp&nbspEmail:</strong> ${contact.email}</p>
+                    <button class="btn btn-primary" onclick="editContact(${contact.id})">Edit  </button>
+                    <button class="btn btn-danger" onclick="&nbspdeleteContact(${contact.id})">Delete</button>
+                `;
+                container.appendChild(contactBox);
+            });
         }
+        // need to figure out the alerts
+
+        //function deleteContact(contactId) {
+           // alert('Delete contact with ID ' + contactId);
+        //}
+
+        // testing doContacts function
+        const contacts = [
+            { id: 1, name: 'John Doe', number: '123-456-7890', email: 'john.doe@example.com' },
+            { id: 2, name: 'Jane Smith', number: '098-765-4321', email: 'jane.smith@example.com' },
+        ];
+        doContacts(contacts);
     </script>
 </body>
 </html>
