@@ -2,6 +2,7 @@
 <html lang="en">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="./js/getSession.js"></script>
+<script src="./js/addContact.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,7 +31,7 @@
                 <label for="phone">Phone Number (Format: XXX-XXX-XXXX) <strong>*</strong></label>
                 <input type="tel" class="form-control" id="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
             </div>
-            <div class="primary-text-color">Required fields are indicated by a <strong>*</strong></div>
+            <div class="primary-text-color"><i>Required fields are indicated by an <strong>*</strong></i></div>
             <div class="d-flex justify-content-center">
                 <button type="submit" class="btn btn-primary">Add Contact</button>
             </div>
@@ -40,32 +41,4 @@
         </form>
     </div>
 </body>
-<script>
-    $(document).ready(function() {
-        $("#newContactForm").submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: './api/addContact.php',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    userId: userId,
-                    firstName: $("#firstName").val(),
-                    lastName: $("#lastName").val(),
-                    email: $("#email").val(),
-                    phone: $("#phone").val(),
-                }),
-                success: function(response) {
-                    alert(response.message); 
-                    $('#newContactForm')[0].reset();
-                    // window.location.href = "login.html"; // redirect to contact page
-                },
-                error: function(xhr) {
-                    alert(xhr.responseJSON.message);
-                }
-            });
-        });
-    });
-</script>
 </html>
