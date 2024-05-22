@@ -1,5 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    let logoutHeader;
+    $.ajax({
+        type: 'POST',
+        url: './api/logout.php',
+        dataType: 'json',
+        success: function(response) {
+            logoutHeader = "You have been logged out successfully";
+        },
+        error: function(xhr) {
+            logoutHeader = "Logout failed. Refresh this page to retry logout"
+        }
+    })
+    .done(function(data) {
+        $(document).ready(function() {
+            $('.logout-header').eq(0).html(logoutHeader);
+        });
+    });
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +43,7 @@
             background-color: #fffbe9; 
             border-color: #fffbe9; 
         }
-        .register-header {
+        .logout-header {
             color: #562B08; 
         }
         .form-group label {
@@ -37,23 +57,7 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="text-center mb-4 Logout-header"></h1>
+    <h1 class="text-center mb-4 logout-header"></h1>
 </div>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            type: 'POST',
-            url: './api/logout.php',
-            dataType: 'json',
-            success: function(response) {
-                $('.Logout-header').eq(0).html("You have been logged out successfully");
-            },
-            error: function(xhr) {
-                $('.Logout-header').eq(0).html("Logout failed. Refresh this page to retry logout");
-            }
-        })
-    });
-</script>
 </body>
 </html>
