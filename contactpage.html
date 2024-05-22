@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="./js/getSession.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +55,7 @@
         <div id="contactsContainer"></div>
         <br>
         <div class="d-flex justify-content-center"> <!-- Center the logout button -->
-            <button onclick="doLogout()" class="btn btn-primary">Logout</button>
+            <button onclick="logout()" class="btn btn-primary">Logout</button>
         </div>
         <p id="colorSearchResult"></p>
     </div>
@@ -62,51 +64,8 @@
         const urlBase = 'http://urlBase';
         const extension = 'php';
 
-        let userId = 0;
-        let firstName = "";
-        let lastName = "";
-
-        function doLogin() {
-            userId = 0;
-            firstName = "";
-            lastName = "";
-
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-
-            let tmp = { username: username, password: password };
-            let jsonPayload = JSON.stringify(tmp);
-
-            let url = urlBase + '/login.' + extension;
-
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            xhr.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    let jsonObject = JSON.parse(xhr.responseText);
-                    userId = jsonObject.UserId;
-
-                    if (userId < 1) {
-                        alert("User/Password combination incorrect");
-                        return;
-                    }
-
-                    firstName = jsonObject.firstName;
-                    lastName = jsonObject.lastName;
-
-                    window.location.href = "contactpage.html";
-                }
-            };
-            xhr.send(jsonPayload);
-        }
-
-        function doLogout() {
-            userId = 0;
-            firstName = "";
-            lastName = "";
-            document.cookie = "firstName= ; expires = Thu, 01 Jan 1970 00:00:00 GMT";
-            window.location.href = "index.html";
+        function logout() {
+            window.location.assign("logout.html");
         }
 
         function doContacts(contacts) {
@@ -117,8 +76,8 @@
                 contactBox.className = 'contact-box';
                 contactBox.innerHTML = `
                     <div class="d-flex ml-16">
-                    <p><strong>&nbsp&nbsp Name:</strong> ${contact.name}</p>
-                    <p><strong>&nbsp&nbspNumber:</strong> ${contact.number}</p>
+                    <p><strong>&nbsp&nbsp Name:</strong> ${contact.firstName} ${contact.lastName}</p>
+                    <p><strong>&nbsp&nbspNumber:</strong> ${contact.phone}</p>
                     <p><strong>&nbsp&nbspEmail:</strong> ${contact.email}</p>
                     <button class="btn btn-primary ml-auto" onclick="editContact(${contact.id})">Edit  </button>
                     <button class="btn btn-danger ml-3" onclick="&nbspdeleteContact(${contact.id})">Delete</button>
@@ -134,8 +93,8 @@
 
         // testing doContacts function
         const contacts = [
-            { id: 1, name: 'John Doe', number: '123-456-7890', email: 'john.doe@example.com' },
-            { id: 2, name: 'Jane Smith', number: '098-765-4321', email: 'jane.smith@example.com' },
+            { id: 1, firstName: 'John', lastName: 'Smith', phone: '123-456-7890', email: 'john.doe@example.com' },
+            { id: 2, firstName: 'Jane', lastName: 'Smith', phone: '098-765-4321', email: 'jane.smith@example.com' },
         ];
         doContacts(contacts);
     </script>
