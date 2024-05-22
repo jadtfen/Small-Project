@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts - ContactsPage</title>
+    <title>Contact Manger - Home page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://colorhunt.co/palette/182747562b08647e68d8d8d8">
     <style>
         body {
             background-color: #ad8b73; 
@@ -23,111 +22,42 @@
             background-color: #fffbe9; 
             border-color: #fffbe9; 
         }
-        .register-header {
+        .Login-header {
             color: #562B08; 
         }
         .form-group label {
             color: #562B08; 
         }
+        .contact-manager-heading {
+            color: #562B08;
+        }
+        .signup-link {
+            color: black;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="d-flex justify-content-center">
-            <form action="/search_results" method="GET">
-                <input type="text" name="query" placeholder="Search...">
-                <button type="submit" class="btn btn-primary">Search</button>
-            </form>
-        </div>
-        <br>
-        <div class="d-flex justify-content-center">
-            <button onclick="doLogin()" class="btn btn-primary">Login</button>
-        </div>
-        <p id="colorSearchResult"></p>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4 contact-manager-heading">Login</h1>
+        <form id="home-page">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="/login.html">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </a>
+            </div>
+            <div class="text-center mt-3">
+                <a href="signup.html" class="signup-link">Don't have an account? Sign up</a>
+            </div>
+        </form>
     </div>
-
-    <script>
-        const urlBase = 'http://urlBase';
-        const extension = 'php';
-
-        let userId = 0;
-        let firstName = "";
-        let lastName = "";
-
-        function doLogin() {
-            userId = 0;
-            firstName = "";
-            lastName = "";
-
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value;
-
-            let tmp = { username: username, password: password };
-            let jsonPayload = JSON.stringify(tmp);
-
-            let url = urlBase + '/login.' + extension;
-
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            // try {
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        let jsonObject = JSON.parse(xhr.responseText);
-                        userId = jsonObject.UserId;
-
-                        if (userId < 1) {
-                            alert("User/Password combination incorrect");
-                            return;
-                        }
-
-                        firstName = jsonObject.firstName;
-                        lastName = jsonObject.lastName;
-
-                        window.location.href = "contactpage.html";
-                    }
-                };
-                xhr.send(jsonPayload);
-            // } catch (err) {
-            //    alert("error: " + err.message);
-            // }
-        }
-
-        function searchColor() {
-            let srch = document.getElementById("searchText").value;
-            document.getElementById("colorSearchResult").innerHTML = "";
-
-            let colorList = "";
-
-            let tmp = { search: srch, userId: userId };
-            let jsonPayload = JSON.stringify(tmp);
-
-            let url = urlBase + '/SearchColors.' + extension;
-
-            let xhr = new XMLHttpRequest();
-            xhr.open("POST", url, true);
-            xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-            // try {
-                xhr.onreadystatechange = function () {
-                    if (this.readyState == 4 && this.status == 200) {
-                        document.getElementById("colorSearchResult").innerHTML = "Color(s) have been retrieved";
-                        let jsonObject = JSON.parse(xhr.responseText);
-
-                        for (let i = 0; i < jsonObject.results.length; i++) {
-                            colorList += jsonObject.results[i];
-                            if (i < jsonObject.results.length - 1) {
-                                colorList += "<br />\r\n";
-                            }
-                        }
-
-                        document.getElementById("colorSearchResult").innerHTML = colorList;
-                    }
-                };
-                xhr.send(jsonPayload);
-            // } catch (err) {
-            //    document.getElementById("colorSearchResult").innerHTML = err.message;
-            // }
-        }
-    </script>
 </body>
 </html>
