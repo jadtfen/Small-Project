@@ -1,0 +1,30 @@
+body {
+    background-color: #ad8b73; 
+}
+.container {
+    background-color: #ceab93;
+    border-radius: 10px;
+    padding: 20px;
+}
+.btn-primary {
+    background-color: #562B08; 
+    border-color: #e3caa5;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #fffbe9; 
+    border-color: #fffbe9;
+    color: #562B08;
+}
+.primary-text-color {
+    color: #562B08; 
+}
+.form-group label {
+    color: #562B08;
+    font-weight: 500;
+}
+.hyperlink {
+    color: #562B08;
+    font-weight: 600;
+    text-decoration: underline;
+}
