@@ -1,46 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="./js/login.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Manger - Log In</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #ad8b73; 
-        }
-        .container {
-            background-color: #ceab93;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .btn-primary {
-            background-color: #562B08; 
-            border-color: #e3caa5; 
-        }
-        .btn-primary:hover {
-            background-color: #fffbe9; 
-            border-color: #fffbe9;
-            color: #562B08;
-        }
-        .Login-header {
-            color: #562B08; 
-        }
-        .form-group label {
-            color: #562B08; 
-        }
-        .contact-manager-heading {
-            color: #562B08;
-        }
-        .signup-link {
-            color: #562B08;
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <div class="container mt-5">
-        <h1 class="text-center mb-4 contact-manager-heading">Log In</h1>
+        <h1 class="text-center mb-4 contact-manager-heading primary-text-color">Log In</h1>
         <form id="loginForm">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -54,35 +25,9 @@
                 <button type="submit" class="btn btn-primary">Log In</button>
             </div>
             <div class="text-center mt-3">
-                <a href="register.html" class="signup-link">Don't have an account? Sign Up!</a>
+                <a href="register.html" class="hyperlink">Don't have an account? Sign Up!</a>
             </div>
         </form>
     </div>
 </body>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#loginForm").submit(function(e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: './api/login.php',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    username: $('#username').val(),
-                    password: $('#password').val(),
-                }),
-                success: function(response) {
-                    alert(response.message); 
-                    $('#loginForm')[0].reset();
-                    // window.location.href = "login.html"; // redirect to contact page
-                },
-                error: function(xhr) {
-                    alert(xhr.responseJSON.message);
-                }
-            });
-        });
-    });
-</script>
 </html>
