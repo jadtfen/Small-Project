@@ -52,7 +52,7 @@
         <br>
         <div id="contactsContainer"></div>
         <br>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center"> <!-- Center the logout button -->
             <button onclick="doLogout()" class="btn btn-primary">Logout</button>
         </div>
         <p id="colorSearchResult"></p>
@@ -116,12 +116,12 @@
                 const contactBox = document.createElement('div');
                 contactBox.className = 'contact-box';
                 contactBox.innerHTML = `
-                    <div class="d-flex justify-content-center">
-                    <p><strong>&nbsp&nbspName:</strong> ${contact.name}</p>
+                    <div class="d-flex ml-16">
+                    <p><strong>&nbsp&nbsp Name:</strong> ${contact.name}</p>
                     <p><strong>&nbsp&nbspNumber:</strong> ${contact.number}</p>
                     <p><strong>&nbsp&nbspEmail:</strong> ${contact.email}</p>
-                    <button class="btn btn-primary" onclick="editContact(${contact.id})">Edit  </button>
-                    <button class="btn btn-danger" onclick="&nbspdeleteContact(${contact.id})">Delete</button>
+                    <button class="btn btn-primary ml-auto" onclick="editContact(${contact.id})">Edit  </button>
+                    <button class="btn btn-danger ml-3" onclick="&nbspdeleteContact(${contact.id})">Delete</button>
                 `;
                 container.appendChild(contactBox);
             });
