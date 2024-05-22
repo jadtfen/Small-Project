@@ -3,45 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts - ContactsPage </title>
+    <title>Contact Manager - Registration</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-     <link rel="stylesheet" href="https://colorhunt.co/palette/182747562b08647e68d8d8d8">
-        <style>
-            body {
-                background-color: #ad8b73; 
-            }
-            .container {
-                background-color: #ceab93;
-                border-radius: 10px;
-                padding: 20px;
-            }
-            .btn-primary {
-                background-color: #562B08; 
-                border-color: #e3caa5; 
-            }
-            .btn-primary:hover {
-                background-color: #fffbe9; 
-                border-color: #fffbe9; 
-            }
-            .register-header {
-                color: #562B08; 
-            }
-            .form-group label {
-                color: #562B08; 
-            }
-            
-        </style>
-    
-    </head>
-    <body>
-            <form>
-                <div class="d-flex justify-content-center">
-                    <form action="/search_results">
-                        <input type="text" name="query" placeholder="Search...">
-                        <button type="submit">search</button>
-                  
-            </form>
+    <style>
+        body {
+            background-color: #ad8b73; 
+        }
+        .container {
+            background-color: #ceab93;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .btn-primary {
+            background-color: #562B08; 
+            border-color: #e3caa5; 
+        }
+        .btn-primary:hover {
+            background-color: #fffbe9; 
+            border-color: #fffbe9; 
+        }
+        .register-header {
+            color: #562B08; 
+        }
+        .form-group label {
+            color: #562B08; 
+        }
+        .login-link {
+            color: black;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
 
-
-                    
+<div class="container mt-5">
+    <h1 class="text-center mb-4 register-header">Sign up</h1>
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" required>
         </div>
+        <div class="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" required>
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" required>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+        <div class="text-center mt-3">
+            <a href="login.html" class="login-link">Have an account? Login</a>
+        </div>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#registrationForm').submit(function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: './api/register.php',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    firstname: $('#firstName').val(),
+                    lastname: $('#lastName').val(),
+                    username: $('#username').val(),
+                    password: $('#password').val(),
+                }),
+                success: function(response) {
+                    alert(response.message); 
+                    $('#registrationForm')[0].reset();
+                    // window.location.href = "login.html"; // redirect to login page
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
