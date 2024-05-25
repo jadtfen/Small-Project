@@ -11,9 +11,8 @@ $(document).ready(function() {
                 password: $('#password').val(),
             }),
             success: function(response) {
-                alert(response.message); 
                 $('#loginForm')[0].reset();
-                // window.location.href = "login.html"; // redirect to contact page
+                window.location.assign("contactpage.html");
             },
             error: function(xhr) {
                 alert(xhr.responseJSON.message);

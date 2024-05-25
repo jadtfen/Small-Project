@@ -14,9 +14,8 @@ $(document).ready(function() {
                 phone: $("#phone").val(),
             }),
             success: function(response) {
-                alert(response.message); 
                 $('#newContactForm')[0].reset();
-                // window.location.href = "login.html"; // redirect to contact page
+                window.location.assign("contactpage.html");
             },
             error: function(xhr) {
                 alert(xhr.responseJSON.message);

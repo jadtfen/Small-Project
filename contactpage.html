@@ -1,74 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="./js/getSession.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacts - ContactsPage</title>
+    <title>Your Contacts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://colorhunt.co/palette/182747562b08647e68d8d8d8">
-    <style>
-        body {
-            background-color: #ad8b73; 
-        }
-        .container {
-            background-color: #ceab93;
-            border-radius: 10px;
-            padding: 20px;
-        }
-        .btn-primary {
-            background-color: #562B08; 
-            border-color: #e3caa5; 
-        }
-        .btn-primary:hover {
-            background-color: #fffbe9; 
-            border-color: #fffbe9; 
-        }
-        .register-header {
-            color: #562B08; 
-        }
-        .form-group label {
-            color: #562B08; 
-        }
-        .contact-box {
-            background-color: #fff;
-            border: 1px solid #562B08;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 10px;
-        }
-        .contact-box .btn {
-            margin-right: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container my-4">
+        <div class="d-flex align-items-center primary-text-color">
+            <strong id="login-name">Logged in as:</strong>
+            <button onclick="logout()" class="btn btn-primary ml-auto">Log Out</button>
+        </div>
+    </div>
+    <div class="container my-4">
         <div class="d-flex justify-content-center">
-            <form action="/search_results" method="GET">
-                <input type="text" name="query" placeholder="Search...">
-                <button type="submit" class="btn btn-primary">Search</button>
+            <form id="searchForm">
+                <span class="form-group">
+                    <input class="rounded border" type="text" id="firstName" placeholder="First Name">
+                </span>
+                <span class="form-group">
+                    <input class="rounded border" type="text" id="lastName" placeholder="Last Name">
+                </span>
+                <p>Enter at least one field to search</p>
+                <div class="d-flex justify-content-center search-btns" style="gap: 10px">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    <button type="button" id="view-all" class="btn btn-primary" onclick="viewAll()">View All</button>
+                </div>
             </form>
         </div>
         <br>
         <div id="contactsContainer"></div>
-        <br>
-        <div class="d-flex justify-content-center"> <!-- Center the logout button -->
-            <button onclick="logout()" class="btn btn-primary">Logout</button>
-        </div>
-        <p id="colorSearchResult"></p>
     </div>
 
     <script>
-        const urlBase = 'http://urlBase';
-        const extension = 'php';
+        // User info
+        let userId;
+        let firstName;
+        let lastName;
+
+        // Information for searches
+        let curPage;
+        let perPage;
+        let maxPages; // implement this
+
+        // Current search params
+        let searchFirstName = "";
+        let searchLastName = "";
+
+        $(document).ready(function() {
+            // Sends the session request, but with modifications
+            $.ajax({
+                type: 'POST',
+                url: './api/session.php',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({}),
+                error: function(xhr) {
+                    window.location.assign("login.html");
+                }
+            })
+            .done(function(data){
+                console.log(data);
+                if (data.sessionActive === true){
+                    // Set necessary globals
+                    curPage = 1;
+                    perPage = 10;
+                    userId = data.userId;
+                    firstName = data.firstName;
+                    lastName = data.lastName;
+                    // Login bar
+                    $("#login-name").html(`Logged in as: ${firstName} ${lastName}`);
+                    // Load initial contacts
+                    getContacts(curPage, perPage, userId, null, null);
+                }
+            });
+
+            $("#searchForm").submit(function(e) {
+                e.preventDefault();
+
+                searchFirstName = $("#firstName").val();
+                searchLastName = $("#lastName").val();
+
+                if (searchFirstName === "" && searchLastName === "")
+                    return;
+
+                // Reset pages
+                resetResults();
+                getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+            });
+        });
 
         function logout() {
             window.location.assign("logout.html");
         }
 
-        function doContacts(contacts) {
+        function renderContacts(contacts) {
             const container = document.getElementById('contactsContainer');
             container.innerHTML = '';
             contacts.forEach(contact => {
@@ -79,24 +108,69 @@
                     <p><strong>&nbsp&nbsp Name:</strong> ${contact.firstName} ${contact.lastName}</p>
                     <p><strong>&nbsp&nbspNumber:</strong> ${contact.phone}</p>
                     <p><strong>&nbsp&nbspEmail:</strong> ${contact.email}</p>
-                    <button class="btn btn-primary ml-auto" onclick="editContact(${contact.id})">Edit  </button>
-                    <button class="btn btn-danger ml-3" onclick="&nbspdeleteContact(${contact.id})">Delete</button>
+                    <button class="btn btn-primary ml-auto" onclick='editContact(${JSON.stringify(contact)})'>Edit</button>
+                    <button class="btn btn-primary ml-3" onclick='deleteContact(${JSON.stringify(contact)})'>Delete</button>
+                    </div>
                 `;
                 container.appendChild(contactBox);
             });
         }
-        // need to figure out the alerts
 
-        //function deleteContact(contactId) {
-           // alert('Delete contact with ID ' + contactId);
-        //}
+        function getContacts(page, perPage, userId, firstName, lastName){
+            $.ajax({
+                type: 'POST',
+                url: './api/searchContact.php',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({
+                    page: page,
+                    perPage: perPage,
+                    userId: userId,
+                    firstName: firstName,
+                    lastName: lastName
+                }),
+                success: function(response) {
+                    renderContacts(response.contacts);
+                },
+                error: function(xhr) {
+                    alert(xhr.responseJSON.message);
+                }
+            });
+        }
 
-        // testing doContacts function
-        const contacts = [
-            { id: 1, firstName: 'John', lastName: 'Smith', phone: '123-456-7890', email: 'john.doe@example.com' },
-            { id: 2, firstName: 'Jane', lastName: 'Smith', phone: '098-765-4321', email: 'jane.smith@example.com' },
-        ];
-        doContacts(contacts);
+        function viewAll(){
+            $("#searchForm")[0].reset();
+            resetResults();
+            searchFirstName = "";
+            searchLastName = "";
+            getContacts(curPage, perPage, userId, null, null);
+        }
+
+        function resetResults(){
+            curPage = 1;
+        }
+
+        function editContact(contact){
+            
+        }
+
+        function deleteContact(contact) {
+            const confirmed = confirm(`Do you want to delete ${contact.firstName} ${contact.lastName} from your contacts?`);
+            if (confirmed){
+                $.ajax({
+                    type: 'POST',
+                    url: './api/deleteContact.php',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    data: JSON.stringify({
+                        contactId: parseInt(contact.contactId),
+                    }),
+                    success: function(response) {
+                        getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+                    }
+                })
+            }
+        }
     </script>
 </body>
 </html>
