@@ -14,9 +14,6 @@ $(document).ready(function() {
                 $('#loginForm')[0].reset();
                 window.location.assign("contactpage.html");
             },
-            error: function(xhr) {
-                alert(xhr.responseJSON.message);
-            }
         });
     });
 });
