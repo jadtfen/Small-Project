@@ -6,10 +6,12 @@ body {
     border-radius: 10px;
     padding: 20px;
 }
+.btn{
+    font-weight: 600;
+}
 .btn-primary {
     background-color: #562B08; 
     border-color: #e3caa5;
-    font-weight: 600;
 }
 .btn-primary:hover {
     background-color: #fffbe9; 
@@ -23,8 +25,36 @@ body {
     color: #562B08;
     font-weight: 500;
 }
+.form-group input, .form-group input:focus {
+    color: #562B08;
+    background-color: #fffbe9;
+    border: none;
+}
 .hyperlink {
     color: #562B08;
     font-weight: 600;
     text-decoration: underline;
+}
+.register-header {
+    color: #562B08; 
+}
+.form-group label {
+    color: #562B08; 
+}
+.contact-box {
+    background-color: #fffbe9;
+    border: 1px solid #562B08;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+.contact-box .btn {
+    width: 72px;
+    margin-right: 5px;
+}
+.contact-box .btn:hover {
+    background-color: #ceab93;
+}
+.search-btns button{
+    width: 96px;
 }
