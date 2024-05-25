@@ -17,9 +17,6 @@ $(document).ready(function() {
                 $('#registrationForm')[0].reset();
                 window.location.href = "login.html"; // redirect to login page
             },
-            error: function(xhr) {
-                alert(xhr.responseJSON.message);
-            }
         });
     });
 });
