@@ -5,6 +5,7 @@ $.ajax({
     dataType: 'json',
     success: function(response) {
         logoutHeader = "You have been logged out successfully";
+        window.location.assign('login.html');
     },
     error: function(xhr) {
         logoutHeader = "Logout failed. Refresh this page to retry logout"

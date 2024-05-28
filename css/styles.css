@@ -1,7 +1,7 @@
 body {
     background-color: #ad8b73; 
 }
-.container {
+.container, .container-xl, .container-fluid{
     background-color: #ceab93;
     border-radius: 10px;
     padding: 20px;
@@ -12,16 +12,12 @@ body {
 .btn-primary {
     background-color: #562B08; 
     border-color: #e3caa5;
-    transition: background-color 0.15s,
-        color 0.15s
 }
 .btn-primary:hover {
     background-color: #fffbe9; 
     border-color: #fffbe9;
     color: #562B08;
 }
-.btn-primary:active {
-    opacity: 0.5;
 .primary-text-color {
     color: #562B08; 
 }
@@ -45,20 +41,47 @@ body {
 .form-group label {
     color: #562B08; 
 }
-.contact-box {
-    background-color: #fffbe9;
-    border: 1px solid #562B08;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 10px;
-}
-.contact-box .btn {
-    width: 72px;
-    margin-right: 5px;
-}
-.contact-box .btn:hover {
-    background-color: #ceab93;
-}
 .search-btns button{
     width: 96px;
+}
+#page-number{
+    color: #562B08;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.page-btns button{
+    width: 96px;
+}
+.error-text {
+    color: #a30c02;
+    font-weight: 600;
+}
+.contact-item-box{
+    background-color: #fffbe9;
+    border-color: #562B08 !important;
+    color: #562B08;
+}
+.contact-item-header-box{
+    background-color: #fffbe9;
+    border-color: #562B08 !important;
+    color: #562B08;
+    font-weight: bold;
+}
+.contact-field {
+    width: 100%;
+}
+.contact-field:read-only {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+}
+.contact-field:read-only:focus{
+    outline: none;
+}
+.contact-mod-btn{
+    width: 84px;
+}
+.contact-mod-btn:hover{
+    background-color: #ceab93;
 }
