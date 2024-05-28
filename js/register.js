@@ -13,10 +13,12 @@ $(document).ready(function() {
                 password: $('#password').val(),
             }),
             success: function(response) {
-                alert(response.message); 
                 $('#registrationForm')[0].reset();
                 window.location.href = "login.html"; // redirect to login page
             },
+            error: function(xhr) {
+                $('.error-text').html(xhr.responseJSON.message);
+            }
         });
     });
 });

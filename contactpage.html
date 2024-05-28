@@ -9,13 +9,14 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div class="container my-4">
+    <div class="container-fluid my-4">
         <div class="d-flex align-items-center primary-text-color">
-            <strong id="login-name">Logged in as:</strong>
-            <button onclick="logout()" class="btn btn-primary ml-auto">Log Out</button>
+            <strong id="login-name" class="ml-5">Logged in as:</strong>
+            <button onclick="window.location.assign('addcontact.html')" class="btn btn-primary ml-auto">Add New Contact</button>
+            <button onclick="window.location.assign('logout.html')" class="btn btn-primary mr-5">Log Out</button>
         </div>
     </div>
-    <div class="container my-4">
+    <div class="container-fluid my-4">
         <div class="d-flex justify-content-center">
             <form id="searchForm">
                 <span class="form-group">
@@ -32,145 +33,26 @@
             </form>
         </div>
         <br>
-        <div id="contactsContainer"></div>
+        <div id="contactsContainer">
+            <div class="row text-center">
+                <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">First Name</div>
+                <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Last Name</div>
+                <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Phone</div>
+                <div class="contact-item-header-box col-4 border border-right-0 border-1 py-3">Email</div>
+                <div class="contact-item-header-box col-2 border border-1 py-3">Options</div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="error-text my-4"></div>
+        </div>
+        <div class="d-flex justify-content-center page-btns">
+            <button class="btn btn-primary" onclick="setFirst()">First</button>
+            <button class="btn btn-primary" onclick="setPrevious()">Previous</button>
+            <div id="page-number" class="px-3">1</div>
+            <button class="btn btn-primary" onclick="setNext()">Next</button>
+            <button class="btn btn-primary" onclick="setLast()">Last</button>
+        </div>
     </div>
-
-    <script>
-        // User info
-        let userId;
-        let firstName;
-        let lastName;
-
-        // Information for searches
-        let curPage;
-        let perPage;
-        let maxPages; // implement this
-
-        // Current search params
-        let searchFirstName = "";
-        let searchLastName = "";
-
-        $(document).ready(function() {
-            // Sends the session request, but with modifications
-            $.ajax({
-                type: 'POST',
-                url: './api/session.php',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({}),
-                error: function(xhr) {
-                    window.location.assign("login.html");
-                }
-            })
-            .done(function(data){
-                console.log(data);
-                if (data.sessionActive === true){
-                    // Set necessary globals
-                    curPage = 1;
-                    perPage = 10;
-                    userId = data.userId;
-                    firstName = data.firstName;
-                    lastName = data.lastName;
-                    // Login bar
-                    $("#login-name").html(`Logged in as: ${firstName} ${lastName}`);
-                    // Load initial contacts
-                    getContacts(curPage, perPage, userId, null, null);
-                }
-            });
-
-            $("#searchForm").submit(function(e) {
-                e.preventDefault();
-
-                searchFirstName = $("#firstName").val();
-                searchLastName = $("#lastName").val();
-
-                if (searchFirstName === "" && searchLastName === "")
-                    return;
-
-                // Reset pages
-                resetResults();
-                getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
-            });
-        });
-
-        function logout() {
-            window.location.assign("logout.html");
-        }
-
-        function renderContacts(contacts) {
-            const container = document.getElementById('contactsContainer');
-            container.innerHTML = '';
-            contacts.forEach(contact => {
-                const contactBox = document.createElement('div');
-                contactBox.className = 'contact-box';
-                contactBox.innerHTML = `
-                    <div class="d-flex ml-16">
-                    <p><strong>&nbsp&nbsp Name:</strong> ${contact.firstName} ${contact.lastName}</p>
-                    <p><strong>&nbsp&nbspNumber:</strong> ${contact.phone}</p>
-                    <p><strong>&nbsp&nbspEmail:</strong> ${contact.email}</p>
-                    <button class="btn btn-primary ml-auto" onclick='editContact(${JSON.stringify(contact)})'>Edit</button>
-                    <button class="btn btn-primary ml-3" onclick='deleteContact(${JSON.stringify(contact)})'>Delete</button>
-                    </div>
-                `;
-                container.appendChild(contactBox);
-            });
-        }
-
-        function getContacts(page, perPage, userId, firstName, lastName){
-            $.ajax({
-                type: 'POST',
-                url: './api/searchContact.php',
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                data: JSON.stringify({
-                    page: page,
-                    perPage: perPage,
-                    userId: userId,
-                    firstName: firstName,
-                    lastName: lastName
-                }),
-                success: function(response) {
-                    renderContacts(response.contacts);
-                },
-                error: function(xhr) {
-                    alert(xhr.responseJSON.message);
-                }
-            });
-        }
-
-        function viewAll(){
-            $("#searchForm")[0].reset();
-            resetResults();
-            searchFirstName = "";
-            searchLastName = "";
-            getContacts(curPage, perPage, userId, null, null);
-        }
-
-        function resetResults(){
-            curPage = 1;
-        }
-
-        function editContact(contact){
-            
-        }
-
-        function deleteContact(contact) {
-            const confirmed = confirm(`Do you want to delete ${contact.firstName} ${contact.lastName} from your contacts?`);
-            if (confirmed){
-                $.ajax({
-                    type: 'POST',
-                    url: './api/deleteContact.php',
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    data: JSON.stringify({
-                        contactId: parseInt(contact.contactId),
-                    }),
-                    success: function(response) {
-                        getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
-                    }
-                })
-            }
-        }
-    </script>
+    <script src="js/contactPage.js"></script>
 </body>
 </html>
