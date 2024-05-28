@@ -65,10 +65,10 @@ function renderContacts(contacts) {
     // Reset html back to the original header row
     container.innerHTML = `
         <div class="row text-center mx-3">
-            <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">First Name</div>
-            <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Last Name</div>
-            <div class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Phone</div>
-            <div class="contact-item-header-box col-3 border border-right-0 border-1 py-3">Email</div>
+            <div id="first-name-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">First Name</div>
+            <div id="last-name-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Last Name</div>
+            <div id="phone-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Phone</div>
+            <div id="email-label" class="contact-item-header-box col-3 border border-right-0 border-1 py-3">Email</div>
             <div class="contact-item-header-box col-3 border border-1 py-3">Options</div>
         </div>
     `;
@@ -77,16 +77,16 @@ function renderContacts(contacts) {
         row.className = 'row mx-3';
         row.innerHTML = `
             <div class="contact-item-box col-2 border border-right-0 border-top-0 border-1 py-3 px-1 align-items-center">
-                <input class="contact-field" value="${contact.firstName}" readonly></input>
+                <input class="contact-field" aria-labelledby="first-name-label" value="${contact.firstName}" readonly></input>
             </div>
             <div class="contact-item-box col-2 border border-right-0 border-top-0 border-1 py-3 px-1 align-items-center">
-                <input class="contact-field" value="${contact.lastName}" readonly></input>
+                <input class="contact-field" aria-labelledby="last-name-label" value="${contact.lastName}" readonly></input>
             </div>
             <div class="contact-item-box col-2 border border-right-0 border-top-0 border-1 py-3 px-1 align-items-center">
-                <input class="contact-field" value="${contact.phone}" readonly></input>
+                <input class="contact-field" aria-labelledby="phone-label" value="${contact.phone}" readonly></input>
             </div>
             <div class="contact-item-box col-3 border border-right-0 border-top-0 border-1 py-3 px-1 align-items-center">
-                <input class="contact-field" value="${contact.email}" readonly></input>
+                <input class="contact-field" aria-labelledby="email-label" value="${contact.email}" readonly></input>
             </div>
             <div class="d-flex contact-item-box col-3 border border-top-0 border-1 align-items-center justify-content-center" style="gap: 10px">
                 <button class="contact-mod-btn btn btn-primary d-inline" onclick='editContact(this)'>Edit</button>
