@@ -15,7 +15,7 @@ $(document).ready(function() {
             }),
             success: function(response) {
                 $('#newContactForm')[0].reset();
-                window.location.assign("contactpage.html");
+                window.location.assign("index.html");
             },
             error: function(xhr) {
                 $('.error-text').html(xhr.responseJSON.message);
