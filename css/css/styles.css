@@ -1,0 +1,88 @@
+body {
+    background-color: #ad8b73; 
+}
+.container, .container-xl, .container-fluid{
+    background-color: #ceab93;
+    border-radius: 10px;
+    padding: 20px;
+}
+.btn{
+    font-weight: 600;
+}
+.btn-primary {
+    background-color: #562B08; 
+    border-color: #e3caa5;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #fffbe9 !important; 
+    border-color: #fffbe9 !important;
+    color: #562B08 !important;
+    transition: 200ms ease-in-out;
+}
+.primary-text-color {
+    color: #562B08; 
+}
+.form-group label {
+    color: #562B08;
+    font-weight: 500;
+}
+.form-group input, .form-group input:focus {
+    color: #562B08;
+    background-color: #fffbe9;
+    border: none;
+}
+.hyperlink {
+    color: #562B08;
+    font-weight: 600;
+    text-decoration: underline;
+}
+.register-header {
+    color: #562B08; 
+}
+.form-group label {
+    color: #562B08; 
+}
+.search-btns button{
+    width: 96px;
+}
+#page-number{
+    color: #562B08;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.page-btns button{
+    width: 96px;
+}
+.error-text {
+    color: #a30c02;
+    font-weight: 600;
+}
+.contact-item-box{
+    background-color: #fffbe9;
+    border-color: #562B08 !important;
+    color: #562B08;
+}
+.contact-item-header-box{
+    background-color: #fffbe9;
+    border-color: #562B08 !important;
+    color: #562B08;
+    font-weight: bold;
+}
+.contact-field {
+    width: 100%;
+}
+.contact-field:read-only {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+}
+.contact-field:read-only:focus{
+    outline: none;
+}
+.contact-mod-btn{
+    width: 84px;
+}
+.contact-mod-btn:hover{
+    background-color: #ceab93;
+}
