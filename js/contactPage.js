@@ -1,3 +1,7 @@
+let userId;
+let firstName;
+let lastName;
+
 // Information for searches
 let curPage;
 let perPage;
