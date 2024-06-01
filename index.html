@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="js/getSession.js"></script>
+<script src="js/index.js"></script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,50 +10,5 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
-    <div class="container-fluid my-4">
-        <div class="d-flex align-items-center primary-text-color">
-            <strong id="login-name" class="ml-5">Logged in as:</strong>
-            <button onclick="window.location.assign('addcontact.html')" class="btn btn-primary ml-auto">Add New Contact</button>
-            <button onclick="window.location.assign('logout.html')" class="btn btn-primary mr-5">Log Out</button>
-        </div>
-    </div>
-    <div class="container-fluid my-4">
-        <div class="d-flex justify-content-center">
-            <form id="searchForm">
-                <span class="form-group">
-                    <input class="rounded border" type="text" id="firstName" placeholder="First Name">
-                </span>
-                <span class="form-group">
-                    <input class="rounded border" type="text" id="lastName" placeholder="Last Name">
-                </span>
-                <p>Enter at least one field to search</p>
-                <div class="d-flex justify-content-center search-btns" style="gap: 10px">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <button type="button" id="view-all" class="btn btn-primary" onclick="viewAll()">View All</button>
-                </div>
-            </form>
-        </div>
-        <br>
-        <div id="contactsContainer">
-            <div class="row text-center">
-                <div id="first-name-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">First Name</div>
-                <div id="last-name-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Last Name</div>
-                <div id="phone-label" class="contact-item-header-box col-2 border border-right-0 border-1 py-3">Phone</div>
-                <div id="email-label" class="contact-item-header-box col-4 border border-right-0 border-1 py-3">Email</div>
-                <div class="contact-item-header-box col-2 border border-1 py-3">Options</div>
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-            <div class="error-text my-4"></div>
-        </div>
-        <div class="d-flex justify-content-center page-btns">
-            <button class="btn btn-primary" onclick="setFirst()">First</button>
-            <button class="btn btn-primary" onclick="setPrevious()">Previous</button>
-            <div id="page-number" class="px-3">1</div>
-            <button class="btn btn-primary" onclick="setNext()">Next</button>
-            <button class="btn btn-primary" onclick="setLast()">Last</button>
-        </div>
-    </div>
-    <script src="js/contactPage.js"></script>
+
 </body>
-</html>

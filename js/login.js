@@ -12,7 +12,7 @@ $(document).ready(function() {
             }),
             success: function(response) {
                 $('#loginForm')[0].reset();
-                window.location.assign("index.html");
+                window.location.assign("contacts.html");
             },
             error: function(xhr) {
                 $('.error-text').html(xhr.responseJSON.message);
