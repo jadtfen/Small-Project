@@ -13,10 +13,11 @@ body {
     background-color: #562B08; 
     border-color: #e3caa5;
 }
-.btn-primary:hover {
-    background-color: #fffbe9; 
-    border-color: #fffbe9;
-    color: #562B08;
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus {
+    background-color: #fffbe9 !important; 
+    border-color: #fffbe9 !important;
+    color: #562B08 !important;
+    transition: 200ms ease-in-out;
 }
 .primary-text-color {
     color: #562B08; 
