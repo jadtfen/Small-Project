@@ -22,7 +22,7 @@
     // Acquire data
     $data = json_decode(file_get_contents("php://input"), true);
     $required_keys = ["page", "perPage", "userId"];
-    $optional_keys = ["firstName", "lastName"];
+    $optional_keys = ["firstName", "lastName", "phone", "email"];
 
     // Check for required values
     check_required_values($required_keys, $data);
@@ -45,6 +45,8 @@
     // Add vars for non-required keys
     $firstname = "";
     $lastname = "";
+    $phone = "";
+    $email = "";
     if (array_key_exists("firstName", $data) && $data["firstName"] !== NULL
         && !ctype_space($data["firstName"])){
         $firstname = $data["firstName"];
@@ -52,6 +54,14 @@
     if (array_key_exists("lastName", $data) && $data["lastName"] !== NULL
         && !ctype_space($data["lastName"])){
         $lastname = $data["lastName"];
+    }
+    if (array_key_exists("phone", $data) && $data["phone"] !== NULL
+        && !ctype_space($data["phone"])){
+        $phone = $data["phone"];
+    }
+    if (array_key_exists("email", $data) && $data["email"] !== NULL
+        && !ctype_space($data["email"])){
+        $email = $data["email"];
     }
     
     // Build the query
@@ -65,8 +75,16 @@
         $q = $q."AND lastname LIKE '%{$lastname}%' ";
         $count_q = $count_q."AND lastname LIKE '%{$lastname}%' ";
     }
+    if ($phone !== ""){
+        $q = $q."AND phone LIKE '%{$phone}%' ";
+        $count_q = $count_q."AND phone LIKE '%{$phone}%' ";
+    }
+    if ($email !== ""){
+        $q = $q."AND email LIKE '%{$email}%' ";
+        $count_q = $count_q."AND email LIKE '%{$email}%' ";
+    }
     $start_index = $per_page * ($page - 1);
-    $q = $q."ORDER BY firstName, lastName ASC ";
+    $q = $q."ORDER BY firstName, lastName, phone, email ASC ";
     $q = $q."LIMIT {$start_index}, {$per_page};";
     $count_q = $count_q.";";
 

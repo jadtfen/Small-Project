@@ -11,6 +11,8 @@ let curRendered;
 // Current search params
 let searchFirstName = "";
 let searchLastName = "";
+let searchPhone = "";
+let searchEmail = "";
 
 $(document).ready(function() {
     // Sends the session request, but with modifications
@@ -36,7 +38,7 @@ $(document).ready(function() {
             // Login bar
             $("#login-name").html(`Logged in as: ${firstName} ${lastName}`);
             // Load initial contacts
-            getContacts(curPage, perPage, userId, null, null);
+            getContacts(curPage, perPage, userId, null, null, null, null);
         }
         else{
             window.location.assign("login.html");
@@ -49,8 +51,11 @@ $(document).ready(function() {
 
         searchFirstName = $("#firstName").val();
         searchLastName = $("#lastName").val();
+        searchPhone = $("#phone").val();
+        searchEmail = $("#email").val();
 
-        if (searchFirstName === "" && searchLastName === "")
+        if (searchFirstName === "" && searchLastName === "" &&
+            searchPhone === "" && searchEmail === "")
             return;
 
         // Perform search, display first page
@@ -98,7 +103,7 @@ function renderContacts(contacts) {
     });
 }
 
-function getContacts(page, perPage, userId, firstName, lastName){
+function getContacts(page, perPage, userId, firstName, lastName, phone, email){
     $.ajax({
         type: 'POST',
         url: './api/searchContact.php',
@@ -109,7 +114,9 @@ function getContacts(page, perPage, userId, firstName, lastName){
             perPage: perPage,
             userId: userId,
             firstName: firstName,
-            lastName: lastName
+            lastName: lastName,
+            phone: phone,
+            email: email
         }),
         success: function(response) {
             maxPages = Math.ceil(response.totalContacts / perPage);
@@ -126,6 +133,8 @@ function viewAll(){
     $("#searchForm")[0].reset();
     searchFirstName = "";
     searchLastName = "";
+    searchPhone = "";
+    searchEmail = "";
     setFirst();
 }
 
@@ -177,7 +186,7 @@ function confirmContact(element, contactId){
                 email: values[3],
             }),
             success: function(response){
-                getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+                getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
                 $(".error-text").html("");
             },
             error: function(xhr){
@@ -243,7 +252,7 @@ function deleteContact(contact) {
                     curPage--;
                     $("#page-number").html(curPage);
                 }
-                getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+                getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
             },
             error: function(xhr){
                 $(".error-text").html(xhr.responseJSON.message);
@@ -256,14 +265,14 @@ function deleteContact(contact) {
 function setFirst(){
     curPage = 1;
     $("#page-number").html(curPage);
-    getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+    getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
 }
 
 function setPrevious(){
     if (curPage > 1){
         curPage--;
         $("#page-number").html(curPage);
-        getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+        getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
     }
 }
 
@@ -271,7 +280,7 @@ function setNext(){
     if (curPage < maxPages){
         curPage++;
         $("#page-number").html(curPage);
-        getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+        getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
     }
 }
 
@@ -279,6 +288,6 @@ function setLast(){
     if (curPage != maxPages){
         curPage = maxPages;
         $("#page-number").html(curPage);
-        getContacts(curPage, perPage, userId, searchFirstName, searchLastName);
+        getContacts(curPage, perPage, userId, searchFirstName, searchLastName, searchPhone, searchEmail);
     }
 }
