@@ -23,7 +23,7 @@
 
     // Acquire necessary data
     $data = json_decode(file_get_contents("php://input"), true);
-    $keys = ["firstName", "lastName", "email", "phone", "userId"];
+    $keys = ["firstName", "email", "phone", "userId"];
 
     // Check if the required data is present
     if (!all_keys_exist($keys, $data)){
@@ -36,10 +36,14 @@
 
     // Create local variable copies
     $firstname = $data["firstName"];
-    $lastname = $data["lastName"];
+    $lastname = "";
     $email = $data["email"];
     $phone = $data["phone"];
     $userid = $data["userId"];
+
+    if (array_key_exists("lastName", $data)){
+        $lastname = $data["lastName"];
+    }
 
     // Check if the user provided exists (should not be needed for normal web usage)
     $q = "SELECT userId FROM Users where userid = {$userid};";
