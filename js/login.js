@@ -8,7 +8,7 @@ $(document).ready(function() {
             dataType: 'json',
             data: JSON.stringify({
                 username: $('#username').val(),
-                password: $('#password').val(),
+                password: md5($('#password').val()),
             }),
             success: function(response) {
                 $('#loginForm')[0].reset();

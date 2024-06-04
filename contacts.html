@@ -12,7 +12,7 @@
     <div class="container-fluid my-4">
         <div class="d-flex align-items-center primary-text-color">
             <strong id="login-name" class="ml-5">Logged in as:</strong>
-            <button onclick="window.location.assign('addcontact.html')" class="btn btn-primary ml-auto">Add New Contact</button>
+            <button onclick="window.location.assign('addcontact.html')" class="btn btn-primary ml-auto mr-2">Add New Contact</button>
             <button onclick="window.location.assign('logout.html')" class="btn btn-primary mr-5">Log Out</button>
         </div>
     </div>
@@ -32,9 +32,9 @@
                     <input class="rounded border" type="text" id="email" placeholder="Email">
                 </span>
                 <p>Enter at least one field to search</p>
-                <div class="d-flex justify-content-center search-btns" style="gap: 10px">
-                    <button type="submit" class="btn btn-primary">Search</button>
-                    <button type="button" id="view-all" class="btn btn-primary" onclick="viewAll()">View All</button>
+                <div class="d-flex justify-content-center search-btns">
+                    <button type="submit" class="btn btn-primary mx-1">Search</button>
+                    <button type="button" id="view-all" class="btn btn-primary mx-1" onclick="viewAll()">View All</button>
                 </div>
             </form>
         </div>
@@ -52,11 +52,11 @@
             <div class="error-text my-4"></div>
         </div>
         <div class="d-flex justify-content-center page-btns">
-            <button class="btn btn-primary" onclick="setFirst()">First</button>
-            <button class="btn btn-primary" onclick="setPrevious()">Previous</button>
+            <button class="btn btn-primary mx-1" onclick="setFirst()">First</button>
+            <button class="btn btn-primary mx-1" onclick="setPrevious()">Previous</button>
             <div id="page-number" class="px-3">1</div>
-            <button class="btn btn-primary" onclick="setNext()">Next</button>
-            <button class="btn btn-primary" onclick="setLast()">Last</button>
+            <button class="btn btn-primary mx-1" onclick="setNext()">Next</button>
+            <button class="btn btn-primary mx-1" onclick="setLast()">Last</button>
         </div>
     </div>
     <script src="js/contactPage.js"></script>

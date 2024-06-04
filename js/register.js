@@ -10,7 +10,7 @@ $(document).ready(function() {
                 firstName: $('#firstName').val(),
                 lastName: $('#lastName').val(),
                 username: $('#username').val(),
-                password: $('#password').val(),
+                password: md5($('#password').val()),
             }),
             success: function(response) {
                 $('#registrationForm')[0].reset();
