@@ -93,10 +93,10 @@ function renderContacts(contacts) {
                 <input class="contact-field" aria-labelledby="email-label" value="${contact.email}" readonly></input>
             </div>
             <div class="d-flex contact-item-box col-3 border border-top-0 border-1 align-items-center justify-content-center" style="gap: 10px">
-                <button class="contact-mod-btn btn btn-primary d-inline" onclick='editContact(this)'>Edit</button>
-                <button class="contact-mod-btn btn btn-primary d-none" onclick='confirmContact(this, ${parseInt(contact.contactId)})'>Confirm</button>
-                <button class="contact-mod-btn btn btn-primary d-none" onclick='cancelEditContact(this, ${JSON.stringify(contact)})'>Cancel</button>
-                <button class="contact-mod-btn btn btn-primary d-inline" onclick='deleteContact(${JSON.stringify(contact)})'>Delete</button>
+                <button class="contact-mod-btn btn btn-darkhover d-inline" onclick='editContact(this)'>Edit</button>
+                <button class="contact-mod-btn btn btn-darkhover d-none" onclick='confirmContact(this, ${parseInt(contact.contactId)})'>Confirm</button>
+                <button class="contact-mod-btn btn btn-darkhover d-none" onclick='cancelEditContact(this, ${JSON.stringify(contact)})'>Cancel</button>
+                <button class="contact-mod-btn btn btn-darkhover d-inline" onclick='deleteContact(${JSON.stringify(contact)})'>Delete</button>
             </div>
         `;
         container.appendChild(row);

@@ -9,13 +9,18 @@ body {
 .btn{
     font-weight: 600;
 }
-.btn-primary {
-    background-color: #562B08; 
-    border-color: #e3caa5;
+.btn-primary, .btn-darkhover {
+    background-color: #562B08;
+    color: white;
+    border: none;
 }
 .btn-primary:hover, .btn-primary:active, .btn-primary:focus {
     background-color: #fffbe9 !important; 
-    border-color: #fffbe9 !important;
+    color: #562B08 !important;
+    transition: 200ms ease-in-out;
+}
+.btn-darkhover:hover, .btn-darkhover:active, .btn-darkhover:focus {
+    background-color: #ceab93 !important; 
     color: #562B08 !important;
     transition: 200ms ease-in-out;
 }
