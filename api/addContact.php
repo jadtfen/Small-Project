@@ -12,7 +12,7 @@
         $res = [
             "contactAdded" => $contactAdded, //boolean
             "message" => $msg, // string containing success or reason for failure
-            "response_code" => $rescode // response code
+            "responseCode" => $rescode // response code
         ];
         return $res;
     }
@@ -65,7 +65,7 @@
     echo json_encode(compose_response(
         true,
         "Contact added successfully",
-        200
+        201
     ));
-    http_response_code(200);
+    http_response_code(201);
 ?>
