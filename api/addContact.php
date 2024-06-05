@@ -65,7 +65,7 @@
     echo json_encode(compose_response(
         true,
         "Contact added successfully",
-        201
+        200
     ));
-    http_response_code(201);
+    http_response_code(200);
 ?>
